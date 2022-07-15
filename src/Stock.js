@@ -6,6 +6,7 @@ class Stock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            value:'',
             stockChartXValues: [],
             stockChartYValues: []
         }
@@ -63,8 +64,21 @@ class Stock extends React.Component {
             )    */    
     }
 
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        document.getElementById("demo").innerHTML = this.state.value;
+        this.fetchMockData();
+    }
+
     getMockData() {
         let mockData = {
+            '2022-07-16': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+             },
             '2022-07-15': {
                'open': Math.random() * 150,
                'social_count': Math.random() * 10
@@ -117,7 +131,15 @@ class Stock extends React.Component {
     render() {
         return (
             <div>
-                <h1>Stock</h1>
+                <h1>Stock Market Recommander</h1>
+                <h4>Stock Symbol: <span id="demo">MSFT</span></h4>
+                <div className="form-group">
+               <form>
+                    <input type="text" className="form-control" value={this.state.value} onChange={this.handleChange}/>
+                        <button type="submit" >Show</button>
+                </form>
+                    
+                </div>
                 <Plot
                     data={[
                     {
@@ -129,7 +151,7 @@ class Stock extends React.Component {
                     },
                     
                     ]}
-                    layout={{width: 720, height: 440, title: 'A Fancy Plot'}}
+                    layout={{width: 720, height: 440}}
                 />
             </div>
         )
