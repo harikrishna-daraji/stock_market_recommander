@@ -15,6 +15,7 @@ class Stock extends React.Component {
         this.fetchStock();
     }
 
+    
     fetchStock() {
         const pointerToThis = this;
         console.log(pointerToThis);
