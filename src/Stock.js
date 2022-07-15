@@ -12,20 +12,42 @@ class Stock extends React.Component {
     }
 
     componentDidMount() {
-        this.fetchStock();
+        this.fetchMockData();
     }
 
     
-    fetchStock() {
+    parseResponseData(reponseData) {
         const pointerToThis = this;
         console.log(pointerToThis);
-        const API_KEY = 'KWJVITAD5OCZK7TS';
-        let stock_Symbol = 'AMZN';
-        let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock_Symbol}&apikey=${API_KEY}`;
 
         let stockChartXValuesFunction = [];
         let stockChartYValuesFunction = [];
 
+        for(var key in reponseData) {
+            stockChartXValuesFunction.push(key);
+            stockChartYValuesFunction.push(reponseData[key]['open']);
+        }
+
+        pointerToThis.setState({
+            stockChartXValues: stockChartXValuesFunction,
+            stockChartYValues: stockChartYValuesFunction
+        })
+
+    }
+
+
+    // Getting mock data
+    fetchMockData() {
+        let stock_Symbol = 'AMZN';
+
+        let responseData = this.getMockData();
+        this.parseResponseData(responseData);
+    }
+
+    // backend call
+    fetchStock() {
+     // Uncomment the following and add URL to get data from  backend
+        /*let API_Call = ``;
         fetch(API_Call)
             .then(
                 function(respnse) {
@@ -36,18 +58,60 @@ class Stock extends React.Component {
                 function(data) {
                     console.log(data);
 
-                    for(var key in data['Time Series (Daily)']) {
-                        stockChartXValuesFunction.push(key);
-                        stockChartYValuesFunction.push(data['Time Series (Daily)'][key]['1. open']);
-                    }
-
-                    pointerToThis.setState({
-                        stockChartXValues: stockChartXValuesFunction,
-                        stockChartYValues: stockChartYValuesFunction
-                    })
+                
                 }
-            )
+            )    */    
+    }
 
+    getMockData() {
+        let mockData = {
+            '2022-07-15': {
+               'open': Math.random() * 150,
+               'social_count': Math.random() * 10
+            },            
+            '2022-07-14' :{
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-13': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            }, 
+            '2022-07-12': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-11': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-10': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-09': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-08': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-07': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-06': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+            '2022-07-05': {
+                'open': Math.random() * 150,
+                'social_count': Math.random() * 10
+            },
+        }
+        
+        return mockData;
     }
 
     render() {
