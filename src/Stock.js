@@ -32,7 +32,7 @@ class Stock extends React.Component {
             stockChartXValuesFunction.push(key);
             stockChartYPriceValuesFunction.push(reponseData[key]['open']);
             stockChartYSocialValuesFunction.push(reponseData[key]['social_count'])
-            stock_recommand_status.push(this.generateRecommandationAlgorithm(reponseData[key]['open'],reponseData[key]['social_count']));
+            stock_recommand_status.push(this.generateRecommandationAlgorithm(key,reponseData[key]['open'],reponseData[key]['social_count']));
         }
 
         pointerToThis.setState({
@@ -137,8 +137,11 @@ class Stock extends React.Component {
         return mockData;
     }
 
-    generateRecommandationAlgorithm(price,social_count) {
-        return 'sell';
+    generateRecommandationAlgorithm(date,price,social_count) {
+        return {
+            'date': date,
+            'status': 'sell'
+        }
     }
 
     render() {
@@ -167,7 +170,7 @@ class Stock extends React.Component {
                     ]}
                     layout={{width: 720, height: 440}}
                 />
-                 <h4>Social media(15 days)</h4>
+                 <h4>Social media Count(15 days)</h4>
                  <Plot
                     data={[
                     {
@@ -182,7 +185,28 @@ class Stock extends React.Component {
                     layout={{width: 720, height: 440}}
                 />
                 <h4>Recommandation</h4>
-                
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        this.state.recommandStatus.map(
+                            item => {
+                                return (
+                                    <tr>
+                                        <td>{ item.date }</td>
+                                        <td>{ item.status }</td>
+                                    </tr>
+                                )
+                            }
+                        )
+                    }
+                    </tbody>
+                </table>
             </div>
         )
     }
