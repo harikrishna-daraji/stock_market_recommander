@@ -1,6 +1,9 @@
 import React from "react";
 import Plot from 'react-plotly.js';
 
+const PRICE_MAX_LIMIT = 150
+const SOCIAL_MAX_LIMIT = 10
+
 class Stock extends React.Component {
 
     constructor(props) {
@@ -85,62 +88,71 @@ class Stock extends React.Component {
     getMockData() {
         let mockData = {
             '2022-07-16': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
              },
             '2022-07-15': {
-               'open': Math.random() * 150,
-               'social_count': Math.random() * 10
+               'open': Math.random() * PRICE_MAX_LIMIT,
+               'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },            
             '2022-07-14' :{
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-13': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             }, 
             '2022-07-12': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-11': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-10': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-09': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-08': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-07': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-06': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
             '2022-07-05': {
-                'open': Math.random() * 150,
-                'social_count': Math.random() * 10
+                'open': Math.random() * PRICE_MAX_LIMIT,
+                'social_count': Math.random() * SOCIAL_MAX_LIMIT
             },
         }
         
         return mockData;
     }
-
+    
+    // Buy low and sell high or Buy high and sell higher
     generateRecommandationAlgorithm(date,price,social_count) {
+        let status = 'Hold';
+
+        if((social_count > SOCIAL_MAX_LIMIT - SOCIAL_MAX_LIMIT/3) && price >  PRICE_MAX_LIMIT - PRICE_MAX_LIMIT/3) {
+            status= 'Sell';
+        } else if((social_count < SOCIAL_MAX_LIMIT - SOCIAL_MAX_LIMIT/3) && price <  PRICE_MAX_LIMIT - PRICE_MAX_LIMIT/3) {
+            status= 'Buy';
+        } 
+
         return {
             'date': date,
-            'status': 'sell'
+            'status': status
         }
     }
 
