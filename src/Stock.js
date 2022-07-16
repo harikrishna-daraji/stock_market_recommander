@@ -8,7 +8,8 @@ class Stock extends React.Component {
         this.state = {
             value:'',
             stockChartXValues: [],
-            stockChartYValues: []
+            stockChartPriceYValues: [],
+            stockchartSocialYValues: []
         }
     }
 
@@ -22,16 +23,19 @@ class Stock extends React.Component {
         console.log(pointerToThis);
 
         let stockChartXValuesFunction = [];
-        let stockChartYValuesFunction = [];
+        let stockChartYPriceValuesFunction = [];
+        let stockChartYSocialValuesFunction = [];
 
         for(var key in reponseData) {
             stockChartXValuesFunction.push(key);
-            stockChartYValuesFunction.push(reponseData[key]['open']);
+            stockChartYPriceValuesFunction.push(reponseData[key]['open']);
+            stockChartYSocialValuesFunction.push(reponseData[key]['social_count'])
         }
 
         pointerToThis.setState({
             stockChartXValues: stockChartXValuesFunction,
-            stockChartYValues: stockChartYValuesFunction
+            stockChartPriceYValues: stockChartYPriceValuesFunction,
+            stockchartSocialYValues: stockChartYSocialValuesFunction
         })
 
     }
@@ -140,11 +144,12 @@ class Stock extends React.Component {
                 </form>
                     
                 </div>
+                <h4>Prices(15 days)</h4>
                 <Plot
                     data={[
                     {
                         x: this.state.stockChartXValues,
-                        y: this.state.stockChartYValues,
+                        y: this.state.stockChartPriceYValues,
                         type: 'scatter',
                         mode: 'lines+markers',
                         marker: {color: 'red'},
@@ -153,6 +158,21 @@ class Stock extends React.Component {
                     ]}
                     layout={{width: 720, height: 440}}
                 />
+                 <h4>Social media(15 days)</h4>
+                 <Plot
+                    data={[
+                    {
+                        x: this.state.stockChartXValues,
+                        y: this.state.stockchartSocialYValues,
+                        type: 'scatter',
+                        mode: 'lines+markers',
+                        marker: {color: 'red'},
+                    },
+                    
+                    ]}
+                    layout={{width: 720, height: 440}}
+                />
+                <h4>Recommandation</h4>
             </div>
         )
     }
