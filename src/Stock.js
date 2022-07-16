@@ -9,7 +9,8 @@ class Stock extends React.Component {
             value:'',
             stockChartXValues: [],
             stockChartPriceYValues: [],
-            stockchartSocialYValues: []
+            stockchartSocialYValues: [],
+            recommandStatus: []
         }
     }
 
@@ -25,17 +26,21 @@ class Stock extends React.Component {
         let stockChartXValuesFunction = [];
         let stockChartYPriceValuesFunction = [];
         let stockChartYSocialValuesFunction = [];
+        let stock_recommand_status = [];
 
         for(var key in reponseData) {
             stockChartXValuesFunction.push(key);
             stockChartYPriceValuesFunction.push(reponseData[key]['open']);
             stockChartYSocialValuesFunction.push(reponseData[key]['social_count'])
+            stock_recommand_status.push(this.generateRecommandationAlgorithm(reponseData[key]['open'],reponseData[key]['social_count']));
         }
 
         pointerToThis.setState({
             stockChartXValues: stockChartXValuesFunction,
             stockChartPriceYValues: stockChartYPriceValuesFunction,
-            stockchartSocialYValues: stockChartYSocialValuesFunction
+            stockchartSocialYValues: stockChartYSocialValuesFunction,
+            recommandStatus: stock_recommand_status
+
         })
 
     }
@@ -132,6 +137,10 @@ class Stock extends React.Component {
         return mockData;
     }
 
+    generateRecommandationAlgorithm(price,social_count) {
+        return 'sell';
+    }
+
     render() {
         return (
             <div>
@@ -173,6 +182,7 @@ class Stock extends React.Component {
                     layout={{width: 720, height: 440}}
                 />
                 <h4>Recommandation</h4>
+                
             </div>
         )
     }
