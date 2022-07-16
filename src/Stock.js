@@ -1,5 +1,6 @@
 import React from "react";
-import Plot from 'react-plotly.js';
+import Graph from './Component/Graph'
+import Table from "./Component/Table";
 
 const PRICE_MAX_LIMIT = 150
 const SOCIAL_MAX_LIMIT = 10
@@ -35,7 +36,7 @@ class Stock extends React.Component {
             stockChartXValuesFunction.push(key);
             stockChartYPriceValuesFunction.push(reponseData[key]['open']);
             stockChartYSocialValuesFunction.push(reponseData[key]['social_count'])
-            stock_recommand_status.push(this.generateRecommandationAlgorithm(key,reponseData[key]['open'],reponseData[key]['social_count']));
+            stock_recommand_status.push(this.generateRecommandationAlgorithm(key,reponseData[key]['open'],reponseData[key]['social_count'], SOCIAL_MAX_LIMIT, PRICE_MAX_LIMIT));
         }
 
         pointerToThis.setState({
@@ -141,12 +142,12 @@ class Stock extends React.Component {
     }
     
     // Buy low and sell high or Buy high and sell higher
-    generateRecommandationAlgorithm(date,price,social_count) {
+    generateRecommandationAlgorithm(date, price, social_count, S_MAX_LIMIT, P_MAX_LIMIT) {
         let status = 'Hold';
 
-        if((social_count > SOCIAL_MAX_LIMIT - SOCIAL_MAX_LIMIT/3) && price >  PRICE_MAX_LIMIT - PRICE_MAX_LIMIT/3) {
+        if((social_count > S_MAX_LIMIT - S_MAX_LIMIT/3) && price >  P_MAX_LIMIT - P_MAX_LIMIT/3) {
             status= 'Sell';
-        } else if((social_count < SOCIAL_MAX_LIMIT - SOCIAL_MAX_LIMIT/3) && price <  PRICE_MAX_LIMIT - PRICE_MAX_LIMIT/3) {
+        } else if((social_count < S_MAX_LIMIT - S_MAX_LIMIT/3) && price <  P_MAX_LIMIT - P_MAX_LIMIT/3) {
             status= 'Buy';
         } 
 
@@ -169,56 +170,27 @@ class Stock extends React.Component {
                     
                 </div>
                 <h4>Prices(15 days)</h4>
-                <Plot
-                    data={[
+                <Graph data = {[
                     {
                         x: this.state.stockChartXValues,
                         y: this.state.stockChartPriceYValues,
                         type: 'scatter',
                         mode: 'lines+markers',
                         marker: {color: 'red'},
-                    },
-                    
-                    ]}
-                    layout={{width: 720, height: 440}}
-                />
+                    }]}/>
                  <h4>Social media Count(15 days)</h4>
-                 <Plot
-                    data={[
+                 <Graph data = {[
                     {
                         x: this.state.stockChartXValues,
                         y: this.state.stockchartSocialYValues,
                         type: 'scatter',
                         mode: 'lines+markers',
                         marker: {color: 'red'},
-                    },
-                    
-                    ]}
-                    layout={{width: 720, height: 440}}
-                />
+                    }]} />
+
                 <h4>Recommandation</h4>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        this.state.recommandStatus.map(
-                            item => {
-                                return (
-                                    <tr>
-                                        <td>{ item.date }</td>
-                                        <td>{ item.status }</td>
-                                    </tr>
-                                )
-                            }
-                        )
-                    }
-                    </tbody>
-                </table>
+
+                <Table headCell = {['Date','Status']} data ={ this.state.recommandStatus}/>
             </div>
         )
     }
