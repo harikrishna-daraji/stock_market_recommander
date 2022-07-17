@@ -1,6 +1,6 @@
 import React from "react";
-import Graph from './Graph'
-import Table from "./Table";
+import Graph from './Graph/Graph'
+import Table from "./Table/Table";
 import { MockData } from "./MockData";
 import { ResponseData } from "./ParseReponseData";
 

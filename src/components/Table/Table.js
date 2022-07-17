@@ -3,7 +3,7 @@ import React from 'react';
 function Table({headCell, data}) {
     return(<table className="table">
         <thead>
-            <tr>
+            <tr key={ headCell[0] }>
                 {
                     headCell.map(
                         item => {
