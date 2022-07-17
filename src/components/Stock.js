@@ -18,7 +18,7 @@ class Stock extends React.Component {
             stockChartXValues: [], // dates
             stockChartPriceYValues: [], // prices
             stockchartSocialYValues: [], // Social media values
-            recommandStatus: []
+            recommandStatus: [] // Recommadations for day(sell/buy/hold)
         }
         // Events to handle the input
         this.handleChange = this.handleChange.bind(this);

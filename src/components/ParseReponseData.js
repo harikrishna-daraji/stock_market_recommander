@@ -1,4 +1,4 @@
-import { Algorithm } from "./Algorithm";
+import { Algorithm } from "./Algorithm/Algorithm";
 
 export const ResponseData = (options = {}) => {
     const {reponseData, SOCIAL_MAX_LIMIT, PRICE_MAX_LIMIT,limit_divider} = options;

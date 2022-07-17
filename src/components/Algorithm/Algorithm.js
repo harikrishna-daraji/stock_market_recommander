@@ -1,6 +1,6 @@
 
 // Buy low and sell high or Buy high and sell higher
-// Each values is dependable on props value which might make it easier to 
+// Each values is dependable on props value which might make it easier to modify the algo. in future if needed
 export const Algorithm = (options = {}) => { 
     const {date, price, social_count, S_MAX_LIMIT, P_MAX_LIMIT, limit_divider} = options;
 
