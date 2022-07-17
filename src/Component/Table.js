@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Table({headCell, data}) {
-    return <table className="table">
+    return(<table className="table">
         <thead>
             <tr>
                 {
@@ -31,7 +31,7 @@ function Table({headCell, data}) {
             )
         }
         </tbody>
-    </table>
+    </table>)
 }
 
 
